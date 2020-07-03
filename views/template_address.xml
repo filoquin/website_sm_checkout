@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <template id="address" inherit_id="website_sale.address" name="Address Management">
+    <xpath expr="//input[@name='city']" position="replace">
+      <select class="form-control" name="city_id">
+        <option value="">select...</option>
+        <t t-as="state" t-foreach="states or []">
+          <optgroup t-att-label="state.name">
+            <t t-as="city" t-foreach="city_ids or []">
+              <option t-att-data-state_id="city.state_id.id" t-att-selected="city_id and city.id == city_id.id" t-att-value="city.id" t-if="city.state_id.id==state.id">
+                <t t-esc="city.name"/>
+              </option>
+            </t>
+          </optgroup>
+        </t>
+      </select>
+    </xpath>
+    <xpath expr="//div[contains(@t-attf-class,'div_country')]" position="replace">
+      <input name="country" t-att-value="country" t-attf-class="form-control #{error.get('country') and 'is-invalid' or ''}" type="hidden"/>
+    </xpath>
+    <xpath expr="//div[contains(@t-attf-class,'div_state')]" position="replace">
+      <input name="state" t-att-value="state" t-attf-class="form-control #{error.get('state') and 'is-invalid' or ''}" type="hidden"/>
+    </xpath>
+  </template>
+</odoo>
